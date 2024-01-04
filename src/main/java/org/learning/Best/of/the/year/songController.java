@@ -19,6 +19,13 @@ public class songController {
         model.addAttribute("songs", songs);
         return "Songs";
     }
+    @GetMapping("/details")
+    public String songDetails(@RequestParam int id, Model model) {
+        // Cerco la canzone con l'ID come parametro
+        Song song = getSongById(id);
+        model.addAttribute("song", song);
+        return "Details";
+    }
 
 
 
@@ -26,16 +33,25 @@ public class songController {
     List<Song> allSongs = new ArrayList<>();
 
 
-        allSongs.add(new Song("1", "Sarà lui, sarà lei", "Paolo"));
-        allSongs.add(new Song("2", "The lady is mine", "Michael Jackson"));
-        allSongs.add(new Song("3", "Sir Duke", "Stevie Wonder"));
-        allSongs.add(new Song("4", "Confidence", "Ocean alley"));
-        allSongs.add(new Song("5", "L'amore non si spiega", "Sergio Cammariere"));
+        allSongs.add(new Song(1, "Sarà lui, sarà lei", "Paolo"));
+        allSongs.add(new Song(2, "The lady is mine", "Michael Jackson"));
+        allSongs.add(new Song(3, "Sir Duke", "Stevie Wonder"));
+        allSongs.add(new Song(4, "Confidence", "Ocean alley"));
+        allSongs.add(new Song(5, "L'amore non si spiega", "Sergio Cammariere"));
 
         return allSongs;
     }
 
-    private String getSongsId(@RequestParam String id, Model model){
 
+
+    private Song getSongById(int id) {
+        Song song = null;
+        for (Song s : getSongs()) {
+            if (s.getId() == id) {
+                song = s;
+                break;
+            }
+        }
+        return song;
     }
 }
